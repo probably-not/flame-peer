@@ -5,6 +5,11 @@ defmodule FlamePeer.Config do
 
   require Logger
 
+  # This is compiled with the current mix project, so locally we should have the correct app name.
+  # In a "production" environment, it's using the RELEASE_NAME variable, but since this backend
+  # is meant for testing and development, this should be "good enough".
+  @app_name Mix.Project.config()[:app]
+
   @valid_opts [
     :log,
     :env,
@@ -29,7 +34,7 @@ defmodule FlamePeer.Config do
     default = %Config{
       log: Keyword.get(config, :log, false),
       boot_timeout: 30_000,
-      app: System.get_env("RELEASE_NAME")
+      app: System.get_env("RELEASE_NAME") || @app_name
     }
 
     provided_opts =
