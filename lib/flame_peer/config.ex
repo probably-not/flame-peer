@@ -45,7 +45,7 @@ defmodule FlamePeer.Config do
   end
 
   defp validate_app_name!(%Config{app: nil}) do
-    raise ArgumentError, "You must specify the app for the FlameEC2 backend"
+    raise ArgumentError, "You must specify the app for the FlamePeer backend"
   end
 
   defp validate_app_name!(%Config{} = config) do
