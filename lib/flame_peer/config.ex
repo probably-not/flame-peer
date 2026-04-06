@@ -21,14 +21,13 @@ defmodule FlamePeer.Config do
     :terminator_sup
   ]
 
-  @derive {Inspect, only: [:boot_timeout, :app, :local_ip]}
+  @derive {Inspect, only: [:boot_timeout, :app]}
 
   defstruct log: nil,
             env: %{},
             boot_timeout: nil,
             app: nil,
-            peer_applications: [],
-            local_ip: nil
+            peer_applications: []
 
   def new(opts, config) do
     default = %Config{
@@ -44,9 +43,7 @@ defmodule FlamePeer.Config do
 
     %Config{} = config = Map.merge(default, Map.new(provided_opts))
 
-    config
-    |> validate_app_name!()
-    |> validate_local_ip!()
+    validate_app_name!(config)
   end
 
   defp validate_app_name!(%Config{app: nil}) do
@@ -54,14 +51,6 @@ defmodule FlamePeer.Config do
   end
 
   defp validate_app_name!(%Config{} = config) do
-    config
-  end
-
-  defp validate_local_ip!(%Config{local_ip: nil}) do
-    raise ArgumentError, "Could not extract the local IPv4 for the instance"
-  end
-
-  defp validate_local_ip!(%Config{} = config) do
     config
   end
 end
