@@ -17,6 +17,21 @@ defmodule FlamePeer do
   config :flame, :backend, FlamePeer
   ```
 
+  ### Required Configurations
+
+  * `:app` - The name of your application. Defaults to `System.get_env("RELEASE_NAME")` or #{Mix.Project.config()[:app]}.
+  We use `Mix.Project.config/0` to get the `:app` value. Since this pool is meant for test and development scenarios,
+  the compile time value of the app should be sufficient. However, in a compiled release, the RELEASE_NAME will be used.
+
+  ### Optional Configurations
+
+  * `:boot_timeout` - A timeout for booting a new node. Defaults to 30_000 (30 seconds).
+
+  * `:peer_applications` - A list of peer applications to enforce starting on the peer node.
+  Erlang `:peer` nodes don't automatically start any applications on startup, so this configuration defines which applications
+  should be initialized on startup. Defaults to the `:app` value. If your application needs other applications to start up automatically,
+  they must be specified in this option.
+
   ## Environment Variables
 
   `:peer` nodes *do not* inherit the environment variables of the parent.

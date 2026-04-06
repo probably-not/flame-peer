@@ -27,7 +27,7 @@ defmodule FlamePeer.Config do
             env: %{},
             boot_timeout: nil,
             app: nil,
-            peer_applications: []
+            peer_applications: :unset
 
   def new(opts, config) do
     default = %Config{
@@ -43,7 +43,9 @@ defmodule FlamePeer.Config do
 
     %Config{} = config = Map.merge(default, Map.new(provided_opts))
 
-    validate_app_name!(config)
+    config
+    |> validate_app_name!()
+    |> maybe_set_peer_applications()
   end
 
   defp validate_app_name!(%Config{app: nil}) do
@@ -51,6 +53,18 @@ defmodule FlamePeer.Config do
   end
 
   defp validate_app_name!(%Config{} = config) do
+    config
+  end
+
+  defp maybe_set_peer_applications(%Config{app: app, peer_applications: :unset} = config) when is_binary(app) do
+    %{config | peer_applications: [String.to_existing_atom(app)]}
+  end
+
+  defp maybe_set_peer_applications(%Config{app: app, peer_applications: :unset} = config) when is_atom(app) do
+    %{config | peer_applications: [app]}
+  end
+
+  defp maybe_set_peer_applications(%Config{} = config) do
     config
   end
 end
