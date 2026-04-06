@@ -19,9 +19,8 @@ defmodule FlamePeer do
 
   ### Required Configurations
 
-  * `:app` - The name of your application. Defaults to `System.get_env("RELEASE_NAME")` or #{Mix.Project.config()[:app]}.
-  We use `Mix.Project.config/0` to get the `:app` value. Since this pool is meant for test and development scenarios,
-  the compile time value of the app should be sufficient. However, in a compiled release, the RELEASE_NAME will be used.
+  * `:app` - The name of your application. Defaults to `System.get_env("RELEASE_NAME")` in a release. However, since this backend is typically
+  used in development and testing environments, it must be set on the configuration.
 
   ### Optional Configurations
 
