@@ -29,7 +29,8 @@ defmodule FlamePeer do
   * `:peer_applications` - A list of peer applications to enforce starting on the peer node.
   Erlang `:peer` nodes don't automatically start any applications on startup, so this configuration defines which applications
   should be initialized on startup. Defaults to the `:app` value. If your application needs other applications to start up automatically,
-  they must be specified in this option.
+  they must be specified in this option. The `:flame` and `:flame_peer` applications are automatically enforced to be in this list, to ensure
+  that the necessary processes for FLAME and FlamePeer are properly started at all times.
 
   ## Environment Variables
 
