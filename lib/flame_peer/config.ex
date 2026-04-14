@@ -11,6 +11,7 @@ defmodule FlamePeer.Config do
     :boot_timeout,
     :app,
     :peer_applications,
+    :start_peers_hidden?,
     # We don't use this, but it seems to be passed in automatically as part of the config options.
     # In the FLAME.FlyBackend it's only found in the valid opts list, and isn't found anywhere else in the code.
     :terminator_sup
@@ -22,7 +23,8 @@ defmodule FlamePeer.Config do
             env: %{},
             boot_timeout: nil,
             app: nil,
-            peer_applications: :unset
+            peer_applications: :unset,
+            start_peers_hidden?: true
 
   def new(opts, config) do
     default = %Config{

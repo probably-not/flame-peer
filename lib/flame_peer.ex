@@ -101,7 +101,7 @@ defmodule FlamePeer do
   def remote_boot(%BackendState{parent_ref: parent_ref} = state) do
     {peer_node, req_connect_time} =
       with_elapsed_ms(fn ->
-        PeerNode.start_peer(state.config.peer_applications, state.runner_env)
+        PeerNode.start_peer(state.config.peer_applications, state.runner_env, state.config.start_peers_hidden?)
       end)
 
     Utils.log(state.config, "#{inspect(__MODULE__)} #{inspect(node())} Peer Node created in #{req_connect_time}ms")

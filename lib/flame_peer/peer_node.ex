@@ -1,7 +1,7 @@
 defmodule FlamePeer.PeerNode do
   @moduledoc false
 
-  def start_peer(peer_applications, env) do
+  def start_peer(peer_applications, env, hidden?) do
     node_name = :peer.random_name()
     caller = self()
 
@@ -9,7 +9,7 @@ defmodule FlamePeer.PeerNode do
       :peer.start_link(%{
         name: node_name,
         wait_boot: {caller, :peer_ready},
-        args: peer_args(),
+        args: peer_args(hidden?),
         env: Enum.map(env, fn {k, v} -> {maybe_charlist(k), maybe_charlist(v)} end)
       })
 
@@ -25,8 +25,14 @@ defmodule FlamePeer.PeerNode do
     peer
   end
 
-  defp peer_args do
-    args = [~c"-hidden"]
+  defp peer_args(hidden?) do
+    args =
+      if hidden? do
+        [~c"-hidden"]
+      else
+        []
+      end
+
     args = maybe_add_cookie_args(args)
     in_release? = System.get_env("RELEASE_ROOT") != nil
 
