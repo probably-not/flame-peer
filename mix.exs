@@ -1,7 +1,7 @@
 defmodule FlamePeer.MixProject do
   use Mix.Project
 
-  @version "1.0.1"
+  @version "1.0.2"
   @source_url "https://github.com/probably-not/flame-peer"
   @homepage_url @source_url
 
